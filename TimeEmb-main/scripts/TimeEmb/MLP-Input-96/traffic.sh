@@ -25,5 +25,6 @@ do
       --day_length 7 \
       --train_epochs 30 \
       --patience 5 \
+      --des 7times24 \
       --itr 1 --batch_size 64 --learning_rate 0.002 --random_seed $random_seed
 done
