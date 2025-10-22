@@ -1,6 +1,6 @@
 model_name=TimeEmb
 
-root_path_name=./dataset/
+root_path_name=./dataset/traffic/
 data_path_name=traffic.csv
 model_id_name=traffic
 data_name=custom

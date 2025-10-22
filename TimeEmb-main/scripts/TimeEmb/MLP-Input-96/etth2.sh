@@ -21,11 +21,14 @@ do
       --enc_in 7 \
       --use_hour_index 1 \
       --hour_length 24 \
+      --use_day_index 1 \
+      --day_length 7 \
       --train_epochs 30 \
       --patience 5 \
+      --des 7times24 \
       --itr 1 --batch_size 256 --learning_rate 0.005 --random_seed $random_seed
 done
-
+exit
 for pred_len in 192 336 720
 do
     python -u run.py \
@@ -41,9 +44,12 @@ do
       --enc_in 7 \
       --use_hour_index 1 \
       --hour_length 24 \
+      --use_day_index 1 \
+      --day_length 7 \
       --train_epochs 30 \
       --patience 5 \
       --rec_lambda 0.25\
       --auxi_lambda 0.75\
+      --des 7times24 \
       --itr 1 --batch_size 256 --learning_rate 0.005 --random_seed $random_seed
 done

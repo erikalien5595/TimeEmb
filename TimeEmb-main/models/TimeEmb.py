@@ -65,6 +65,7 @@ class Model(nn.Module):
         # x_freq_imag = x.imag
 
         if self.use_day_index:
+            # print(hour_index, day_index)
             emb_hour_re = self.emb_hour_re[((hour_index * 24 + day_index) % 168).long()]
             emb_hour_im = self.emb_hour_im[((hour_index * 24 + day_index) % 168).long()]
         else:

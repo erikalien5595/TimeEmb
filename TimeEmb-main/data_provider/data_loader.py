@@ -82,6 +82,8 @@ class Dataset_ETT_hour(Dataset):
         self.data_x = data[border1:border2]
         self.data_y = data[border1:border2]
         self.data_stamp = data_stamp
+        df_stamp['day'] = df_stamp['date'].dt.weekday
+        self.day_index = df_stamp['day'].values
 
 
     def __getitem__(self, index):
@@ -96,8 +98,8 @@ class Dataset_ETT_hour(Dataset):
         seq_y_mark = self.data_stamp[r_begin:r_end]
 
         hour_index = torch.tensor(self.hour_index[s_end])
-
-        return seq_x, seq_y, seq_x_mark, seq_y_mark, hour_index, -1
+        day_index = torch.tensor(self.day_index[s_end])
+        return seq_x, seq_y, seq_x_mark, seq_y_mark, hour_index, day_index
 
     def __len__(self):
         return len(self.data_x) - self.seq_len - self.pred_len + 1
