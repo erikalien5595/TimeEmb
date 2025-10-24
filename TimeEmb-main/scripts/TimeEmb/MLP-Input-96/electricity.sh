@@ -27,7 +27,7 @@ do
       --patience 5 \
       --rec_lambda 0.75\
       --auxi_lambda 0.25\
-      --des 7times24 \
+      --des 7times24_delete_filter \
       --itr 1 --batch_size 64 --learning_rate 0.005 --random_seed $random_seed
 done
 

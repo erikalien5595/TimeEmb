@@ -48,7 +48,7 @@ class Model(nn.Module):
         # self.emb_hour_im = nn.Parameter(torch.zeros(self.emb_len_hour, self.enc_in, self.seq_len // 2 + 1), requires_grad=True)
         # self.emb_day_re = nn.Parameter(torch.zeros(self.emb_len_day, self.enc_in, self.seq_len // 2 + 1), requires_grad=True)
         # self.emb_day_im = nn.Parameter(torch.zeros(self.emb_len_day, self.enc_in, self.seq_len // 2 + 1), requires_grad=True)
-        self.w = nn.Parameter(self.scale * torch.randn(1, self.seq_len))
+        # self.w = nn.Parameter(self.scale * torch.randn(1, self.seq_len))
 
     def forward(self, x, hour_index, day_index = None):
         # x: (batch_size, seq_len, enc_in), hour_index: (batch_size,), day_index: (batch_size,)
@@ -60,7 +60,7 @@ class Model(nn.Module):
 
         x = x.permute(0, 2, 1)
         x = torch.fft.rfft(x, dim=2, norm='ortho')
-        w = torch.fft.rfft(self.w, dim=1, norm='ortho')
+        # w = torch.fft.rfft(self.w, dim=1, norm='ortho')
         # x_freq_real = x.real
         # x_freq_imag = x.imag
 
@@ -96,8 +96,8 @@ class Model(nn.Module):
         # if self.use_hour_index:
         #     y_real = y_real + emb_hour
 
-        y_freq = x * w
-        y = torch.fft.irfft(y_freq, n=self.seq_len, dim=2, norm="ortho")
+        # y_freq = x * w
+        y = torch.fft.irfft(x, n=self.seq_len, dim=2, norm="ortho")
         y = self.model(y).permute(0, 2, 1)
 
         y_hour = torch.fft.irfft(emb_hour, n=self.seq_len, dim=2, norm="ortho")
