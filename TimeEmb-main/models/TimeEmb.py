@@ -21,18 +21,18 @@ class Model(nn.Module):
                 nn.ReLU(),
                 nn.Linear(self.d_model, self.pred_len)
         ]
-        layers_hour = [
-                nn.Linear(self.seq_len, self.d_model),
-                nn.ReLU(),
-                nn.Linear(self.d_model, self.pred_len)
-        ]
+        # layers_hour = [
+        #         nn.Linear(self.seq_len, self.d_model),
+        #         nn.ReLU(),
+        #         nn.Linear(self.d_model, self.pred_len)
+        # ]
         # layers_day = [
         #         nn.Linear(self.seq_len, self.d_model),
         #         nn.ReLU(),
         #         nn.Linear(self.d_model, self.pred_len)
         # ]
         self.model = nn.Sequential(*layers)
-        self.model_hour = nn.Sequential(*layers_hour)
+        # self.model_hour = nn.Sequential(*layers_hour)
         # self.model_day = nn.Sequential(*layers_day)
 
         if self.use_day_index:
@@ -96,13 +96,13 @@ class Model(nn.Module):
         # if self.use_hour_index:
         #     y_real = y_real + emb_hour
 
-        y_freq = x * w
+        y_freq = x * w + emb_hour
         y = torch.fft.irfft(y_freq, n=self.seq_len, dim=2, norm="ortho")
         y = self.model(y).permute(0, 2, 1)
 
-        y_hour = torch.fft.irfft(emb_hour, n=self.seq_len, dim=2, norm="ortho")
-        y_hour = self.model_hour(y_hour).permute(0, 2, 1)
-        y = y + y_hour
+        # y_hour = torch.fft.irfft(emb_hour, n=self.seq_len, dim=2, norm="ortho")
+        # y_hour = self.model_hour(y_hour).permute(0, 2, 1)
+        # y = y + y_hour
 
         # if self.use_hour_index:
         #     y_hour = torch.fft.irfft(emb_hour, n=self.seq_len, dim=2, norm="ortho")
